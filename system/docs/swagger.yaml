@@ -1,0 +1,62 @@
+definitions:
+  domain.SystemUser:
+    properties:
+      account:
+        type: string
+      createdAt:
+        type: string
+      id:
+        type: integer
+      password:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /sysuser/add:
+    post:
+      parameters:
+      - description: account
+        in: query
+        name: account
+        required: true
+        type: string
+      - description: password
+        in: query
+        name: password
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+        "500":
+          description: internal error
+          schema:
+            type: string
+      summary: 添加用户
+  /sysuser/login:
+    post:
+      parameters:
+      - description: request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/domain.SystemUser'
+      responses:
+        "200":
+          description: 登录成功
+          schema:
+            type: string
+        "400":
+          description: 账号密码不能为空
+          schema:
+            type: string
+        "500":
+          description: 密码或账号错误
+          schema:
+            type: string
+      summary: 注册用户
+swagger: "2.0"
