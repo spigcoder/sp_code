@@ -13,11 +13,5 @@ func InitDB() *gorm.DB {
 		panic(err)
 	}
 	dao.InitTable(db)
-	user := dao.SystemUser{
-		Id:       1943522465699373056,
-		Account:  "sb",
-		Password: "$2a$10$BuCBsohLlvvpFJpHkWC0MOxKUZ7b.w4ky712xWoM3HYcvt7aVT5GS",
-	}
-	db.Create(&user)
 	return db
 }

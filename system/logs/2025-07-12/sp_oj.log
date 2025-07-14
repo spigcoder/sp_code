@@ -1,0 +1,70 @@
+[2025-07-12 21:23:54] [36m[info][0m FindByAccounttyt{1943536921909174272 tyt $2a$10$lQIBcH236WJyINMaeEmBtuDJsobfIiaWL.vv9cbZnqzm0.58l8K2u spigcoder 2025-07-11 13:04:46.011 +0800 CST} <nil>
+
+[2025-07-12 21:25:29] [36m[info][0m FindByAccounttyt{1943536921909174272 tyt $2a$10$lQIBcH236WJyINMaeEmBtuDJsobfIiaWL.vv9cbZnqzm0.58l8K2u spigcoder 2025-07-11 13:04:46.011 +0800 CST} <nil>
+
+[2025-07-12 21:31:09] [31m[error][0m Get user info failed, 服务器认证失败
+
+[2025-07-12 21:31:44] [31m[error][0m Get user info failed, 服务器认证失败
+
+[2025-07-12 21:34:16] [31m[error][0m Get user info failed, 服务器认证失败
+
+[2025-07-12 21:34:17] [31m[error][0m Get user info failed, 服务器认证失败
+
+[2025-07-12 21:34:18] [31m[error][0m Get user info failed, 服务器认证失败
+
+[2025-07-12 21:34:18] [31m[error][0m Get user info failed, 服务器认证失败
+
+[2025-07-12 21:34:18] [31m[error][0m Get user info failed, 服务器认证失败
+
+[2025-07-12 21:34:18] [31m[error][0m Get user info failed, 服务器认证失败
+
+[2025-07-12 21:34:52] [31m[error][0m Get user info failed, 服务器认证失败
+
+[2025-07-12 21:38:20] [31m[error][0m Get user info failed, 服务器认证失败
+
+[2025-07-12 21:39:04] [31m[error][0m Get user info failed, 服务器认证失败
+
+[2025-07-12 21:40:18] [31m[error][0m Get user info failed, 服务器认证失败
+
+[2025-07-12 21:40:18] [31m[error][0m Get user info failed, 服务器认证失败
+
+[2025-07-12 21:40:19] [31m[error][0m Get user info failed, 服务器认证失败
+
+[2025-07-12 21:40:19] [31m[error][0m Get user info failed, 服务器认证失败
+
+[2025-07-12 21:40:19] [31m[error][0m Get user info failed, 服务器认证失败
+
+[2025-07-12 21:40:20] [31m[error][0m Get user info failed, 服务器认证失败
+
+[2025-07-12 21:40:20] [31m[error][0m Get user info failed, 服务器认证失败
+
+[2025-07-12 21:40:20] [31m[error][0m Get user info failed, 服务器认证失败
+
+[2025-07-12 21:40:20] [31m[error][0m Get user info failed, 服务器认证失败
+
+[2025-07-12 21:40:21] [31m[error][0m Get user info failed, 服务器认证失败
+
+[2025-07-12 21:40:21] [31m[error][0m Get user info failed, 服务器认证失败
+
+[2025-07-12 21:41:42] [36m[info][0m token: &{yJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjE5NDM1MzY5MjE5MDkxNzQyNzIsIlVzZXJBZ2VudCI6IkFwaWZveC8xLjAuMCAoaHR0cHM6Ly9hcGlmb3guY29tKSIsImV4cCI6MTc1MjMzNDg5Mn0.EuxeokUk15a5diYbrba0Ei3ezQY8o4W7r6PNE6TSS7YQeKPKLcIjmy_ysvdQHBXINl7msxjr3lNA0z7uWaSPwA <nil> map[] <nil> [] false}
+
+[2025-07-12 21:41:42] [36m[info][0m userClaims: &{0  {  [] <nil> <nil> <nil> }}
+
+[2025-07-12 21:41:43] [36m[info][0m token: &{yJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjE5NDM1MzY5MjE5MDkxNzQyNzIsIlVzZXJBZ2VudCI6IkFwaWZveC8xLjAuMCAoaHR0cHM6Ly9hcGlmb3guY29tKSIsImV4cCI6MTc1MjMzNDg5Mn0.EuxeokUk15a5diYbrba0Ei3ezQY8o4W7r6PNE6TSS7YQeKPKLcIjmy_ysvdQHBXINl7msxjr3lNA0z7uWaSPwA <nil> map[] <nil> [] false}
+
+[2025-07-12 21:41:43] [36m[info][0m userClaims: &{0  {  [] <nil> <nil> <nil> }}
+
+[2025-07-12 21:41:43] [36m[info][0m token: &{yJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjE5NDM1MzY5MjE5MDkxNzQyNzIsIlVzZXJBZ2VudCI6IkFwaWZveC8xLjAuMCAoaHR0cHM6Ly9hcGlmb3guY29tKSIsImV4cCI6MTc1MjMzNDg5Mn0.EuxeokUk15a5diYbrba0Ei3ezQY8o4W7r6PNE6TSS7YQeKPKLcIjmy_ysvdQHBXINl7msxjr3lNA0z7uWaSPwA <nil> map[] <nil> [] false}
+
+[2025-07-12 21:41:43] [36m[info][0m userClaims: &{0  {  [] <nil> <nil> <nil> }}
+
+[2025-07-12 21:42:19] [36m[info][0m token: &{yJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjE5NDM1MzY5MjE5MDkxNzQyNzIsIlVzZXJBZ2VudCI6IkFwaWZveC8xLjAuMCAoaHR0cHM6Ly9hcGlmb3guY29tKSIsImV4cCI6MTc1MjMzNDg5Mn0.EuxeokUk15a5diYbrba0Ei3ezQY8o4W7r6PNE6TSS7YQeKPKLcIjmy_ysvdQHBXINl7msxjr3lNA0z7uWaSPwA <nil> map[] <nil> [] false}
+
+[2025-07-12 21:42:19] [36m[info][0m userClaims: &{0  {  [] <nil> <nil> <nil> }}
+
+[2025-07-12 21:46:11] [36m[info][0m token: &{yJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjE5NDM1MzY5MjE5MDkxNzQyNzIsIlVzZXJBZ2VudCI6IkFwaWZveC8xLjAuMCAoaHR0cHM6Ly9hcGlmb3guY29tKSIsImV4cCI6MTc1MjMzNDg5Mn0.EuxeokUk15a5diYbrba0Ei3ezQY8o4W7r6PNE6TSS7YQeKPKLcIjmy_ysvdQHBXINl7msxjr3lNA0z7uWaSPwA <nil> map[] <nil> [] false}
+
+[2025-07-12 21:46:48] [36m[info][0m token: &{eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjE5NDM1MzY5MjE5MDkxNzQyNzIsIlVzZXJBZ2VudCI6IkFwaWZveC8xLjAuMCAoaHR0cHM6Ly9hcGlmb3guY29tKSIsImV4cCI6MTc1MjMzNDg5Mn0.EuxeokUk15a5diYbrba0Ei3ezQY8o4W7r6PNE6TSS7YQeKPKLcIjmy_ysvdQHBXINl7msxjr3lNA0z7uWaSPwA 0x1400000ca38 map[alg:HS512 typ:JWT] 0x1400058d680 [18 236 94 162 69 36 215 150 185 118 38 27 173 182 180 18 45 222 205 6 60 163 133 187 175 163 205 19 164 210 75 182 16 120 163 202 45 194 35 155 47 242 178 247 80 28 21 200 54 94 230 179 24 235 222 83 64 211 62 238 89 164 143 192] true}
+
+[2025-07-12 21:46:48] [36m[info][0m userClaims: &{1943536921909174272 Apifox/1.0.0 (https://apifox.com) {  [] 2025-07-12 23:41:32 +0800 CST <nil> <nil> }}
+

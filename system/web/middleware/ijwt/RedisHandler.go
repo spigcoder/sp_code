@@ -18,13 +18,14 @@ type UserClaims struct {
 	// UserAgent 是客户端的信息，用于校验
 	UserAgent string
 	jwt.RegisteredClaims
+	SSID int64
 }
 
 type RefreshClaims struct {
 	Uid int64 `json:"uid"`
 	jwt.RegisteredClaims
 	//用于校验当前用户是否退出
-	ssid string
+	SSID int64
 }
 
 func setRefreshJwt(c *gin.Context, uid int64) error {
@@ -46,13 +47,14 @@ func setRefreshJwt(c *gin.Context, uid int64) error {
 
 }
 
-func setAccessJwt(c *gin.Context, uid int64) error {
+func setAccessJwt(c *gin.Context, uid int64, jwtId int64) error {
 	userClaims := UserClaims{
 		Uid:       uid,
 		UserAgent: c.Request.UserAgent(),
 		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Hour * 2)),
 		},
+		SSID: jwtId,
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS512, userClaims)
 	//签名
@@ -61,12 +63,12 @@ func setAccessJwt(c *gin.Context, uid int64) error {
 		c.String(http.StatusInternalServerError, "服务器问题")
 		return err
 	}
-	c.Header("x-ijwt-token", tokenStr)
+	c.Header("jwt-token", tokenStr)
 	return nil
 }
 
-func SetJWT(c *gin.Context, uid int64) error {
-	err := setAccessJwt(c, uid)
+func SetJWT(c *gin.Context, uid int64, jwtId int64) error {
+	err := setAccessJwt(c, uid, jwtId)
 	err1 := setRefreshJwt(c, uid)
 	return errors.Join(err, err1)
 }

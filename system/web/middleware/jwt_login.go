@@ -3,16 +3,21 @@ package middleware
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/redis/go-redis/v9"
+	"github.com/spigcoder/sp_code/system/repository/cache"
 	"github.com/spigcoder/sp_code/system/web/middleware/ijwt"
 	"net/http"
 )
 
 type LoginJWTMiddlewareBuilder struct {
 	path []string
+	rdb  redis.Cmdable
 }
 
-func NewLoginJWTMiddlewareBuilder() *LoginJWTMiddlewareBuilder {
-	return &LoginJWTMiddlewareBuilder{}
+func NewLoginJWTMiddlewareBuilder(rdb redis.Cmdable) *LoginJWTMiddlewareBuilder {
+	return &LoginJWTMiddlewareBuilder{
+		rdb: rdb,
+	}
 }
 
 func (l *LoginJWTMiddlewareBuilder) IgnorePaths(path string) *LoginJWTMiddlewareBuilder {
@@ -34,11 +39,17 @@ func (l *LoginJWTMiddlewareBuilder) Build() gin.HandlerFunc {
 			c.AbortWithStatus(http.StatusUnauthorized)
 			return
 		}
+		//tokenStr := strings.TrimLeft(tokenHeader, "Bearer ")
+		tokenStr := tokenHeader
 		userClaims := &ijwt.UserClaims{}
-		token, err := jwt.ParseWithClaims(tokenHeader, userClaims, func(token *jwt.Token) (interface{}, error) {
+		token, err := jwt.ParseWithClaims(tokenStr, userClaims, func(token *jwt.Token) (interface{}, error) {
 			return ijwt.AScretKey, nil
 		})
 		if err != nil || token == nil || !token.Valid {
+			c.AbortWithStatus(http.StatusUnauthorized)
+			return
+		}
+		if l.rdb.Exists(c, cache.GetJwtKey(userClaims.SSID)).Val() == 0 {
 			c.AbortWithStatus(http.StatusUnauthorized)
 			return
 		}

@@ -18,6 +18,11 @@ var (
 type SysUserService interface {
 	Login(user domain.SystemUser) (domain.SystemUser, error)
 	Add(user domain.SystemUser) error
+	GetUser(uid int64) (domain.SystemUser, error)
+	GetNickName(uid int64) (string, error)
+	Logout(uid int64) error
+	SetJwtValid(jwtId int64) error
+	SetJwtInvalid(jwtId int64) error
 }
 
 type SysUserServiceImpl struct {
@@ -28,6 +33,26 @@ func NewSysUserServiceImpl(sur repository.SysUserRepository) SysUserService {
 	return &SysUserServiceImpl{
 		SysUserRepo: sur,
 	}
+}
+
+func (impl *SysUserServiceImpl) SetJwtValid(jwtId int64) error {
+	return impl.SysUserRepo.SetJwtValid(jwtId)
+}
+
+func (impl *SysUserServiceImpl) SetJwtInvalid(jwtId int64) error {
+	return impl.SysUserRepo.SetJwtInvalid(jwtId)
+}
+
+func (impl *SysUserServiceImpl) Logout(jwtId int64) error {
+	return impl.SysUserRepo.DeleteJwt(jwtId)
+}
+
+func (impl *SysUserServiceImpl) GetNickName(uid int64) (string, error) {
+	return impl.SysUserRepo.GetNickName(uid)
+}
+
+func (impl *SysUserServiceImpl) GetUser(uid int64) (domain.SystemUser, error) {
+	return impl.SysUserRepo.GetUserById(uid)
 }
 
 func (impl *SysUserServiceImpl) Add(sysUser domain.SystemUser) error {
@@ -53,5 +78,6 @@ func (impl *SysUserServiceImpl) Login(user domain.SystemUser) (domain.SystemUser
 	if !bcrypt.CompareHashAndPassword(sysUser.Password, user.Password) {
 		return domain.SystemUser{}, PasswordNotMatch
 	}
+	impl.SysUserRepo.SetNickName(sysUser.Id, sysUser.NickName)
 	return sysUser, nil
 }

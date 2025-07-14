@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/sirupsen/logrus"
+	"github.com/spigcoder/sp_code/pkg/snowflake"
 	"github.com/spigcoder/sp_code/system/domain"
 	"github.com/spigcoder/sp_code/system/service"
 	"github.com/spigcoder/sp_code/system/web/middleware/ijwt"
@@ -22,10 +23,59 @@ func NewSysUserHandler(sus service.SysUserService) *SysUserHandler {
 }
 
 func (handler *SysUserHandler) RegisterRouter(server *gin.Engine) {
-	group := server.Group("/sysuser")
+	group := server.Group("/system/user")
 	group.POST("/login", handler.Login)
 	group.POST("/add", handler.Add)
 	group.POST("/refresh", handler.RefreshJWT)
+	group.GET("/info", handler.GetUserInfo)
+	group.DELETE("/logout", handler.Logout)
+}
+
+func (handler *SysUserHandler) Logout(c *gin.Context) {
+	claims, ok := c.Get("claims")
+	if !ok {
+		c.JSON(http.StatusUnauthorized, FailedUnauthorized)
+		logrus.Error("Get user info failed, 服务器认证失败")
+		return
+	}
+	userClaim, ok := claims.(*ijwt.UserClaims)
+	if !ok {
+		logrus.Errorf("类型转换失败")
+		c.JSON(http.StatusInternalServerError, FailedUnauthorized)
+		return
+	}
+	err := handler.SysUserService.Logout(userClaim.SSID)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, FailedLogout)
+		return
+	}
+	c.JSON(http.StatusOK, SucessLogout)
+}
+
+func (handler *SysUserHandler) GetUserInfo(c *gin.Context) {
+	Claim, ok := c.Get("claims")
+	if !ok {
+		c.JSON(http.StatusUnauthorized, FailedUnauthorized)
+		logrus.Error("Get user info failed, 服务器认证失败")
+		return
+	}
+	userClaim, ok := Claim.(*ijwt.UserClaims)
+	if !ok {
+		logrus.Errorf("类型转换失败")
+		c.JSON(http.StatusInternalServerError, FailedParam)
+		return
+	}
+	NickName, err := handler.SysUserService.GetNickName(userClaim.Uid)
+	if err != nil {
+		logrus.Errorf("获取用户昵称失败, err: %v", err)
+		return
+	}
+	if err != nil {
+		logrus.Error(err)
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"NickName": NickName})
+	return
 }
 
 // @title		系统用户接口
@@ -74,7 +124,7 @@ func (handler *SysUserHandler) RefreshJWT(c *gin.Context) {
 	}
 	//这里证明这个长token有效，我们要设置短token
 	//设置JWT, 这里同时更新长token和短token
-	err = ijwt.SetJWT(c, refreshClaims.Uid)
+	err = ijwt.SetJWT(c, refreshClaims.Uid, refreshClaims.SSID)
 	if err != nil {
 		c.String(http.StatusInternalServerError, "服务器问题")
 		return
@@ -116,7 +166,9 @@ func (handler *SysUserHandler) Login(c *gin.Context) {
 			return
 		}
 	}
-	err = ijwt.SetJWT(c, sysUser.Id)
+	jwtId := snowflake.GenID()
+	err = ijwt.SetJWT(c, sysUser.Id, jwtId)
+	handler.SysUserService.SetJwtValid(jwtId)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, FailedParam)
 		return
