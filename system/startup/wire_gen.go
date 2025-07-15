@@ -26,6 +26,10 @@ func InitWebServer() *gin.Engine {
 	sysUserRepository := repository.NewSysUserRepositoryImpl(sysUserDao, sysUserCache)
 	sysUserService := service.NewSysUserServiceImpl(sysUserRepository)
 	sysUserHandler := web.NewSysUserHandler(sysUserService)
-	engine := ioc.InitWeb(sysUserHandler, cmdable)
+	questionDao := dao.NewQuestionDaoImpl(db)
+	qestionRepository := repository.NewQuestionRepositoryImpl(questionDao)
+	questionService := service.NewQuestionServiceImpl(qestionRepository)
+	questionHandler := web.NewQuestionHandler(questionService)
+	engine := ioc.InitWeb(sysUserHandler, questionHandler, cmdable)
 	return engine
 }

@@ -21,11 +21,15 @@ func InitWebServer() *gin.Engine {
 		ioc.InitDB, // 提供 *gorm.DB
 		ioc.InitRedis,
 		dao.NewSysUserDaoImpl, // 依赖 *gorm.DB
+		dao.NewQuestionDaoImpl,
 		cache.NewSysUserCacheImpl,
+		repository.NewQuestionRepositoryImpl,
 		repository.NewSysUserRepositoryImpl, // 依赖 dao.SysUserDao
-		service.NewSysUserServiceImpl,       // 依赖 repository.SysUserRepository
-		web.NewSysUserHandler,               // 依赖 service.SysUserService
-		ioc.InitWeb,                         // 依赖 web.SysUserHandler, 返回 *gin.Engine
+		service.NewQuestionServiceImpl,
+		service.NewSysUserServiceImpl, // 依赖 repository.SysUserRepository
+		web.NewQuestionHandler,
+		web.NewSysUserHandler, // 依赖 service.SysUserService
+		ioc.InitWeb,           // 依赖 web.SysUserHandler, 返回 *gin.Engine
 	)
 	return nil
 }

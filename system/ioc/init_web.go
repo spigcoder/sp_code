@@ -10,12 +10,13 @@ import (
 	"time"
 )
 
-func InitWeb(handler *web.SysUserHandler, rdb redis.Cmdable) *gin.Engine {
+func InitWeb(SysUserHandler *web.SysUserHandler, QuestionHandler *web.QuestionHandler, rdb redis.Cmdable) *gin.Engine {
 	mds := InitMiddleware(rdb)
 	// 注册路由
 	engine := gin.Default()
 	engine.Use(mds...)
-	handler.RegisterRouter(engine)
+	SysUserHandler.RegisterRouter(engine)
+	QuestionHandler.RegisterRouter(engine)
 	return engine
 }
 

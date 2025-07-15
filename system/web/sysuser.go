@@ -8,6 +8,7 @@ import (
 	"github.com/spigcoder/sp_code/system/domain"
 	"github.com/spigcoder/sp_code/system/service"
 	"github.com/spigcoder/sp_code/system/web/middleware/ijwt"
+	"github.com/spigcoder/sp_code/system/web/response"
 	"gorm.io/gorm"
 	"net/http"
 )
@@ -34,35 +35,35 @@ func (handler *SysUserHandler) RegisterRouter(server *gin.Engine) {
 func (handler *SysUserHandler) Logout(c *gin.Context) {
 	claims, ok := c.Get("claims")
 	if !ok {
-		c.JSON(http.StatusUnauthorized, FailedUnauthorized)
+		c.JSON(http.StatusUnauthorized, response.FailedUnauthorized)
 		logrus.Error("Get user info failed, 服务器认证失败")
 		return
 	}
 	userClaim, ok := claims.(*ijwt.UserClaims)
 	if !ok {
 		logrus.Errorf("类型转换失败")
-		c.JSON(http.StatusInternalServerError, FailedUnauthorized)
+		c.JSON(http.StatusInternalServerError, response.FailedUnauthorized)
 		return
 	}
 	err := handler.SysUserService.Logout(userClaim.SSID)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, FailedLogout)
+		c.JSON(http.StatusInternalServerError, response.FailedLogout)
 		return
 	}
-	c.JSON(http.StatusOK, SucessLogout)
+	c.JSON(http.StatusOK, response.SucessLogout)
 }
 
 func (handler *SysUserHandler) GetUserInfo(c *gin.Context) {
 	Claim, ok := c.Get("claims")
 	if !ok {
-		c.JSON(http.StatusUnauthorized, FailedUnauthorized)
+		c.JSON(http.StatusUnauthorized, response.FailedUnauthorized)
 		logrus.Error("Get user info failed, 服务器认证失败")
 		return
 	}
 	userClaim, ok := Claim.(*ijwt.UserClaims)
 	if !ok {
 		logrus.Errorf("类型转换失败")
-		c.JSON(http.StatusInternalServerError, FailedParam)
+		c.JSON(http.StatusInternalServerError, response.FailedParam)
 		return
 	}
 	NickName, err := handler.SysUserService.GetNickName(userClaim.Uid)
@@ -94,20 +95,20 @@ func (handler *SysUserHandler) Add(c *gin.Context) {
 	}
 	var req Request
 	if err := c.Bind(&req); err != nil {
-		c.JSON(http.StatusBadRequest, FailedParam)
+		c.JSON(http.StatusBadRequest, response.FailedParam)
 		return
 	}
 	err := handler.SysUserService.Add(domain.SystemUser{Account: req.Account, Password: req.Password})
 	if err == service.AccountAlreadyExist {
-		c.JSON(http.StatusInternalServerError, AccAlreadyExist)
+		c.JSON(http.StatusInternalServerError, response.AccAlreadyExist)
 		return
 	}
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, FailedParam)
+		c.JSON(http.StatusInternalServerError, response.FailedParam)
 		logrus.Errorf("未知错误, err: %v", err)
 		return
 	}
-	c.JSON(http.StatusOK, Sucess)
+	c.JSON(http.StatusOK, response.Sucess)
 	return
 }
 
@@ -149,20 +150,20 @@ func (handler *SysUserHandler) Login(c *gin.Context) {
 	var request LoginRequest
 	err := c.Bind(&request)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, FailedParam)
+		c.JSON(http.StatusBadRequest, response.FailedParam)
 		return
 	}
 	if request.Account == "" || request.Password == "" {
-		c.JSON(http.StatusBadRequest, AccOrPasEmpty)
+		c.JSON(http.StatusBadRequest, response.AccOrPasEmpty)
 		return
 	}
 	sysUser, err := handler.SysUserService.Login(domain.SystemUser{Account: request.Account, Password: request.Password})
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
-			c.JSON(http.StatusInternalServerError, AccountNotFind)
+			c.JSON(http.StatusInternalServerError, response.AccountNotFind)
 			return
 		} else if err == service.PasswordNotMatch {
-			c.JSON(http.StatusInternalServerError, AccOrPasNotMatch)
+			c.JSON(http.StatusInternalServerError, response.AccOrPasNotMatch)
 			return
 		}
 	}
@@ -170,9 +171,9 @@ func (handler *SysUserHandler) Login(c *gin.Context) {
 	err = ijwt.SetJWT(c, sysUser.Id, jwtId)
 	handler.SysUserService.SetJwtValid(jwtId)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, FailedParam)
+		c.JSON(http.StatusInternalServerError, response.FailedParam)
 		return
 	}
-	c.JSON(http.StatusOK, Sucess)
+	c.JSON(http.StatusOK, response.Sucess)
 	return
 }

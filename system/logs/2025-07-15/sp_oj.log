@@ -1,0 +1,12 @@
+[2025-07-15 16:04:45] [31m[error][0m list questions failed, err:Error 1054 (42S22): Unknown column 'sys_users.nick_name' in 'field list'
+
+[2025-07-15 16:05:36] [31m[error][0m list questions failed, err:Error 1054 (42S22): Unknown column 'questions.create_time' in 'field list'
+
+[2025-07-15 16:06:15] [31m[error][0m list questions failed, err:Error 1054 (42S22): Unknown column 'questions.create_at' in 'field list'
+
+[2025-07-15 16:07:13] [31m[error][0m list questions failed, err:Error 1054 (42S22): Unknown column 'questions.create_at' in 'field list'
+
+[2025-07-15 16:07:36] [31m[error][0m list questions failed, err:Error 1054 (42S22): Unknown column 'questions.create_by' in 'on clause'
+
+[2025-07-15 16:07:56] [31m[error][0m list questions failed, err:Error 1054 (42S22): Unknown column 'questions.create_time' in 'order clause'
+

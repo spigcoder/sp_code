@@ -6,6 +6,6 @@ import (
 
 func InitTable(db *gorm.DB) {
 	db.AutoMigrate(
-		SystemUser{},
+		SystemUser{}, Question{},
 	)
 }
